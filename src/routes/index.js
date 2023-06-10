@@ -9,5 +9,7 @@ Route.get("/rekomendasi", MainController.getRekomendasi);
 Route.get("/search/:query", MainController.searchAnime);
 Route.get("/genres", MainController.getGenres);
 Route.get("/genres/:genre/page/:page", MainController.getAnimeByGenres);
+Route.get("/seasons", MainController.getSeasons);
+Route.get("/seasons/:season/page/:page", MainController.getAnimeBySeasons);
 
 export default Route;

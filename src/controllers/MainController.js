@@ -10,10 +10,10 @@ export default class MainController {
         const download = { title: '', link_download: [] };
         const element = $(".venser");
         
-        $(element).find(wrapperClass).each((index, element) => {
-            $(element).find(urlClass).each((i, el) => {
+        $(element).find(wrapperClass).each((_, element) => {
+            $(element).find(urlClass).each((_, el) => {
                 const temp_dl = [];
-                $(el).find("a").each((idx, elm) => {
+                $(el).find("a").each((_, elm) => {
                     temp_dl.push({ name: $(elm).text(), url: $(elm).attr("href") });
                 });
                 download.link_download.push({ resolusi: $(el).find("strong").text(), link: temp_dl });
@@ -65,7 +65,7 @@ export default class MainController {
             const element = $(".venser");
 
             const genre = [];
-            $(element).find(".info > p:nth-of-type(2) > a").each((i, el) => {
+            $(element).find(".info > p:nth-of-type(2) > a").each((_, el) => {
                 genre.push({
                     name: $(el).text(),
                     url: $(el).attr("href"),
@@ -109,7 +109,7 @@ export default class MainController {
         }
     }
 
-    static async getRekomendasi(req, res) {
+    static async getRekomendasi(_, res) {
         try {
             const response = await axiosInstance.get('/');
             const $ = cheerio.load(response.data);
@@ -132,7 +132,7 @@ export default class MainController {
         }
     }
 
-    static async getGenres(req, res) {
+    static async getGenres(_, res) {
         try {
             const response = await axiosInstance.get('/genres');
             const $ = cheerio.load(response.data);
@@ -142,7 +142,7 @@ export default class MainController {
             $(element).find('ul.genres > li').each((i, el) => {
                 genres.push({
                     name: $(el).find('a').text(),
-                    endpoint: $(el).find('a').attr('href')?.replace(`${KUSONIME_URL}/genres`, ''),
+                    endpoint: $(el).find('a').attr('href')?.replace(KUSONIME_URL, ''),
                     url: $(el).find('a').attr('href')
                 });
             });
@@ -159,6 +159,44 @@ export default class MainController {
         try {
             const { genre, page } = req.params;
             const response = await axiosInstance.get(`/genres/${genre}/page/${page}`);
+            const $ = cheerio.load(response.data);
+            const anime = MainController.getAnimeList($);
+
+            return ResponseHelper.success(res, 200, anime);
+        } catch (err) {
+            console.log(err);
+            return ResponseHelper.failed(res, 500, err);
+        }
+    }
+
+    static async getSeasons(_, res) {
+        try {
+            const response = await axiosInstance.get('/seasons-list');
+            const $ = cheerio.load(response.data);
+            const element = $('.venser > .venutama');
+
+            const seasons = [];
+            $(element).find('ul.genres > li').each((i, el) => {
+                seasons.push({
+                    name: $(el).find('a').text(),
+                    endpoint: $(el).find('a').attr('href')?.replace(KUSONIME_URL, ''),
+                    url: $(el).find('a').attr('href')
+                });
+            });
+
+            seasons.splice(0, 1);
+            return ResponseHelper.success(res, 200, seasons);
+        } catch (err) {
+            console.log(err);
+            return ResponseHelper.failed(res, 500, err);
+        }
+    }
+
+
+    static async getAnimeBySeasons(req, res) {
+        try {
+            const { season, page } = req.params;
+            const response = await axiosInstance.get(`/seasons/${season}/page/${page}`);
             const $ = cheerio.load(response.data);
             const anime = MainController.getAnimeList($);
 
