@@ -6,10 +6,10 @@ export default class ResponseHelper {
             .json({ success: true, data });
     }
 
-    static failed(res, status) {
+    static failed(res, status, err) {
         return res
             .status(status)
             .type("application/json")
-            .json({ success: false });
+            .json({ success: false, err });
     }
 }

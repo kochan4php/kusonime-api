@@ -52,7 +52,7 @@ export default class MainController {
             return ResponseHelper.success(res, 200, anime);
         } catch (err) {
             console.log(err);
-            return ResponseHelper.failed(res, 500);
+            return ResponseHelper.failed(res, 500, err);
         }
     }
 
@@ -104,7 +104,7 @@ export default class MainController {
             return ResponseHelper.success(res, 200, animeDetail);
         } catch (err) {
             console.log(err);
-            return ResponseHelper.failed(res, 500);
+            return ResponseHelper.failed(res, 500, err);
         }
     }
 
@@ -127,7 +127,7 @@ export default class MainController {
             return ResponseHelper.success(res, 200, rekomendAnime);
         } catch (err) {
             console.log(err);
-            return ResponseHelper.failed(res, 500);
+            return ResponseHelper.failed(res, 500, err);
         }
     }
 
@@ -150,7 +150,7 @@ export default class MainController {
             return ResponseHelper.success(res, 200, genres);
         } catch (err) {
             console.log(err);
-            return ResponseHelper.failed(res, 500);
+            return ResponseHelper.failed(res, 500, err);
         }
     }
 
@@ -164,7 +164,7 @@ export default class MainController {
             return ResponseHelper.success(res, 200, anime);
         } catch (err) {
             console.log(err);
-            return ResponseHelper.failed(res, 500);
+            return ResponseHelper.failed(res, 500, err);
         }
     }
 }
