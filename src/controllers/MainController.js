@@ -1,24 +1,30 @@
-import axios from "axios";
 import cheerio from "cheerio";
-import ResponseHelper from "../helpers/ResponseHelper.js";
 import axiosInstance from "../config/axiosInstance.js";
+import ResponseHelper from "../helpers/ResponseHelper.js";
 
 const KUSONIME_URL = "https://kusonime.com";
 
 export default class MainController {
     static getDownloadLinks($, wrapperClass, urlClass, titleClass) {
-        const download = { title: '', link_download: [] };
         const element = $(".venser");
-        
+            
+        const download = [];
         $(element).find(wrapperClass).each((_, element) => {
+
+            const temp_res = [];
             $(element).find(urlClass).each((_, el) => {
+
                 const temp_dl = [];
                 $(el).find("a").each((_, elm) => {
-                    temp_dl.push({ name: $(elm).text(), url: $(elm).attr("href") });
+                    temp_dl.push({ platform: $(elm).text(), url: $(elm).attr("href") });
                 });
-                download.link_download.push({ resolusi: $(el).find("strong").text(), link: temp_dl });
+
+                temp_res.push({ resolusi: $(el).find("strong").text(), link: temp_dl });
+
             });
-            download.title = $(element).find(titleClass).text();
+
+            download.push({ title: $(element).find(titleClass).text(), link_download: temp_res });
+
         });
 
         return download;
@@ -73,10 +79,10 @@ export default class MainController {
                 });
             });
 
-            let download = {};
+            let download = [];
             download = MainController.getDownloadLinks($, ".smokeddlrh", ".smokeurlrh", ".smokettlrh");
 
-            if (download.title === '' && download.link_download.length === 0) {
+            if (download.length === 0) {
                 download = MainController.getDownloadLinks($, ".smokeddlrhrh", ".smokeurlrhrh", ".smokettlrhrh");
             }
 
