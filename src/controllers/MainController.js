@@ -2,7 +2,7 @@ import axios from "axios";
 import cheerio from "cheerio";
 import ResponseHelper from "../helpers/ResponseHelper.js";
 
-const KUSONIME_URL = "https://kusonime.com/";
+const KUSONIME_URL = "https://kusonime.com";
 
 export default class MainController {
     static getAnimeList($) {
@@ -98,5 +98,26 @@ export default class MainController {
         }
     }
 
-    static async getRekomendasi(req, res) {}
+    static async getRekomendasi(req, res) {
+        try {
+            const response = await axios.get(KUSONIME_URL);
+            const $ = cheerio.load(response.data);
+            const element = $('.rekomf');
+            
+            const rekomendAnime = [];
+            $(element).find('.recomx > ul > li').each((i, el) => {
+                rekomendAnime.push({
+                    title: $(el).find('.zeeb > a > img').attr('title'),
+                    endpoint: $(el).find('.zeeb > a').attr('href').replace(KUSONIME_URL, ''),
+                    image: $(el).find('.zeeb > a > img').attr('src'),
+                    url: $(el).find('.zeeb > a').attr('href')
+                });
+            });
+
+            return ResponseHelper.success(res, 200, rekomendAnime);
+        } catch (err) {
+            console.log(err);
+            return ResponseHelper.failed(res, 500);
+        }
+    }
 }
