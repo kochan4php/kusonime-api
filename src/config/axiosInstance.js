@@ -1,6 +1,5 @@
 import axios from "axios";
 import tough from "tough-cookie";
-import fakeUseragent from "fake-useragent";
 
 const KUSONIME_URL = "https://kusonime.com";
 const cookieJar = new tough.CookieJar();

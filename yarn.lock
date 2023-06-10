@@ -322,11 +322,6 @@ express@^4.18.2:
     utils-merge "1.0.1"
     vary "~1.1.2"
 
-fake-useragent@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/fake-useragent/-/fake-useragent-1.0.1.tgz#ec7a5d93b4a65118fa6f85c68e9ddef5312c381a"
-  integrity sha512-BOQh1TM//DhrVaeZ+b3w3s4E40rfYcDTn5aoSM2w1xVsZVGglNOzPR5H8KDO8NmF8sT4ppxyb4/MHGIHfZsVDA==
-
 fill-range@^7.0.1:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/fill-range/-/fill-range-7.0.1.tgz#1919a6a7c75fe38b2c7c77e5198535da9acdda40"
