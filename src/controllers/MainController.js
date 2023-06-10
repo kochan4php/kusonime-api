@@ -168,4 +168,17 @@ export default class MainController {
             return ResponseHelper.failed(res, 500, err);
         }
     }
+
+    static async searchAnime(req, res) {
+        try {
+            const response = await axiosInstance.get(`/?s=${req.params.query}&post_type=post`);
+            const $ = cheerio.load(response.data);
+            const anime = MainController.getAnimeList($);
+
+            return ResponseHelper.success(res, 200, anime);
+        } catch (err) {
+            console.log(err);
+            return ResponseHelper.failed(res, 500, err);
+        }
+    }
 }
