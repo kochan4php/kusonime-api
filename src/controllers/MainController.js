@@ -120,4 +120,41 @@ export default class MainController {
             return ResponseHelper.failed(res, 500);
         }
     }
+
+    static async getGenres(req, res) {
+        try {
+            const response = await axios.get(`${KUSONIME_URL}/genres`);
+            const $ = cheerio.load(response.data);
+            const element = $('.venser > .venutama');
+
+            const genres = [];
+            $(element).find('ul.genres > li').each((i, el) => {
+                genres.push({
+                    name: $(el).find('a').text(),
+                    endpoint: $(el).find('a').attr('href')?.replace(`${KUSONIME_URL}/genres`, ''),
+                    url: $(el).find('a').attr('href')
+                });
+            });
+
+            genres.splice(0, 1);
+            return ResponseHelper.success(res, 200, genres);
+        } catch (err) {
+            console.log(err);
+            return ResponseHelper.failed(res, 500);
+        }
+    }
+
+    static async getAnimeByGenres(req, res) {
+        try {
+            const { genre, page } = req.params;
+            const response = await axios(`${KUSONIME_URL}/genres/${genre}/page/${page}`);
+            const $ = cheerio.load(response.data);
+            const anime = MainController.getAnimeList($);
+
+            return ResponseHelper.success(res, 200, anime);
+        } catch (err) {
+            console.log(err);
+            return ResponseHelper.failed(res, 500);
+        }
+    }
 }
