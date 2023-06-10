@@ -5,6 +5,24 @@ import ResponseHelper from "../helpers/ResponseHelper.js";
 const KUSONIME_URL = "https://kusonime.com";
 
 export default class MainController {
+    static getDownloadLinks($, wrapperClass, urlClass, titleClass) {
+        const download = { title: '', link_download: [] };
+        const element = $(".venser");
+        
+        $(element).find(wrapperClass).each((index, element) => {
+            $(element).find(urlClass).each((i, el) => {
+                const temp_dl = [];
+                $(el).find("a").each((idx, elm) => {
+                    temp_dl.push({ name: $(elm).text(), url: $(elm).attr("href") });
+                });
+                download.link_download.push({ resolusi: $(el).find("strong").text(), link: temp_dl });
+            });
+            download.title = $(element).find(titleClass).text();
+        });
+
+        return download;
+    }
+
     static getAnimeList($) {
         const anime = [];
 
@@ -54,20 +72,12 @@ export default class MainController {
                 });
             });
 
-            const download = { title: '', link_download: [] };
-            $(element).find(".smokeddlrh").each((index, element) => {
-                $(element).find(".smokeurlrh").each((i, el) => {
-                    const temp_dl = [];
+            let download = {};
+            download = MainController.getDownloadLinks($, ".smokeddlrh", ".smokeurlrh", ".smokettlrh");
 
-                    $(el).find("a").each((idx, elm) => {
-                        temp_dl.push({ name: $(elm).text(), url: $(elm).attr("href") });
-                    });
-
-                    download.link_download.push({ resolusi: $(el).find("strong").text(), link: temp_dl });
-                });
-
-                download.title = $(element).find('.smokettlrh').text();
-            });
+            if (download.title === '' && download.link_download.length === 0) {
+                download = MainController.getDownloadLinks($, ".smokeddlrhrh", ".smokeurlrhrh", ".smokettlrhrh");
+            }
 
             const season = {
                 name: $(element).find(".lexot .info > p:nth-of-type(3) > a").text(),
