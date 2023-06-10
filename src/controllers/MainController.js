@@ -1,6 +1,7 @@
 import axios from "axios";
 import cheerio from "cheerio";
 import ResponseHelper from "../helpers/ResponseHelper.js";
+import axiosInstance from "../config/axiosInstance.js";
 
 const KUSONIME_URL = "https://kusonime.com";
 
@@ -45,7 +46,7 @@ export default class MainController {
     static async getAnimePerPage(req, res) {
         try {
             const page = req.params.page;
-            const response = await axios.get(`${KUSONIME_URL}/page/${page}`);
+            const response = await axiosInstance.get(`/page/${page}`);
             const $ = cheerio.load(response.data);
             const anime = MainController.getAnimeList($);
 
@@ -59,7 +60,7 @@ export default class MainController {
     static async getAnimeDetail(req, res) {
         try {
             const slug = req.params.slug;
-            const response = await axios.get(`${KUSONIME_URL}/${slug}`);
+            const response = await axiosInstance.get(`/${slug}`);
             const $ = cheerio.load(response.data);
             const element = $(".venser");
 
@@ -110,7 +111,7 @@ export default class MainController {
 
     static async getRekomendasi(req, res) {
         try {
-            const response = await axios.get(KUSONIME_URL);
+            const response = await axiosInstance.get('/');
             const $ = cheerio.load(response.data);
             const element = $('.rekomf');
             
@@ -133,7 +134,7 @@ export default class MainController {
 
     static async getGenres(req, res) {
         try {
-            const response = await axios.get(`${KUSONIME_URL}/genres`);
+            const response = await axiosInstance.get('/genres');
             const $ = cheerio.load(response.data);
             const element = $('.venser > .venutama');
 
@@ -157,7 +158,7 @@ export default class MainController {
     static async getAnimeByGenres(req, res) {
         try {
             const { genre, page } = req.params;
-            const response = await axios(`${KUSONIME_URL}/genres/${genre}/page/${page}`);
+            const response = await axiosInstance.get(`/genres/${genre}/page/${page}`);
             const $ = cheerio.load(response.data);
             const anime = MainController.getAnimeList($);
 
