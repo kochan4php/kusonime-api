@@ -2,7 +2,7 @@ import cheerio from "cheerio";
 import axiosInstance from "../config/axiosInstance.js";
 import ResponseHelper from "../helpers/ResponseHelper.js";
 
-const KUSONIME_URL = "https://kusonime.com";
+const KUSONIME_URL = "https://kusonime.com/";
 
 export default class MainController {
     static getDownloadLinks($, wrapperClass, urlClass, titleClass) {
