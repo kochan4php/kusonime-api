@@ -32,8 +32,9 @@ export default class MainController {
 
     static getAnimeList($) {
         const anime = [];
-
-        $(".venutama").find(".venz ul .kover").each((i, el) => {
+        const element = $(".venutama");
+        
+        $(element).find(".venz ul .kover").each((i, el) => {
             const title = $(el).find(".content > h2 > a").text();
             const release = $(el).find(".content > p").text().trim().split("Genre")[0].trim().split("Admin")[1].trim();
             const genres = $(el).find(".content > p").text().trim().split("Genre")[1].trim().split(", ");
@@ -42,7 +43,7 @@ export default class MainController {
                 url: $(el).find(".thumb a").attr("href"),
                 image: $(el).find(".thumb a .thumbz img").attr("src"),
             };
-
+            
             anime.push({ title, release, genres, link });
         });
 
@@ -55,8 +56,22 @@ export default class MainController {
             const response = await axiosInstance.get(`/page/${page}`);
             const $ = cheerio.load(response.data);
             const anime = MainController.getAnimeList($);
+                    
+            const element = $(".venutama");
+            const current_page = Number($(element).find(".pagination .wp-pagenavi .current").text());
+            const total_page = Number($(element).find(".pagination .wp-pagenavi .pages").text().split("of")[1].trim());
 
-            return ResponseHelper.success(res, 200, anime);
+            const pagination = { 
+                first_page_endpoint: "page/1",
+                next_page_endpoint: current_page === total_page ? null : `page/${current_page + 1}`,
+                current_page,
+                pages_of: $(element).find(".pagination .wp-pagenavi .pages").text(),
+                total_page,
+                prev_page_endpoint: current_page > 1 ? `page/${current_page - 1}` : null,
+                last_page_endpoint: `page/${total_page}`,
+            };
+
+            return ResponseHelper.success(res, 200, { anime, pagination });
         } catch (err) {
             console.log(err);
             return ResponseHelper.failed(res, 500, err);
@@ -95,7 +110,7 @@ export default class MainController {
             const animeDetail = {
                 title: $(element).find(".post-thumb img").attr("title"),
                 japanase: $(element).find(".lexot .info > p:nth-of-type(1)").text().split(":")[1].trim(),
-                image: $(element).find('.post-thumb img').attr('src'),
+                image: $(element).find(".post-thumb img").attr("src"),
                 producer: $(element).find(".lexot .info > p:nth-of-type(4)").text().split(":")[1].trim(),
                 type: $(element).find(".lexot .info > p:nth-of-type(5)").text().split(":")[1].trim(),
                 status: $(element).find(".lexot .info > p:nth-of-type(6)").text().split(":")[1].trim(),
@@ -118,17 +133,17 @@ export default class MainController {
 
     static async getRekomendasi(_, res) {
         try {
-            const response = await axiosInstance.get('/');
+            const response = await axiosInstance.get("/");
             const $ = cheerio.load(response.data);
-            const element = $('.rekomf');
+            const element = $(".rekomf");
             
             const rekomendAnime = [];
-            $(element).find('.recomx > ul > li').each((i, el) => {
+            $(element).find(".recomx > ul > li").each((i, el) => {
                 rekomendAnime.push({
-                    title: $(el).find('.zeeb > a > img').attr('title'),
-                    endpoint: $(el).find('.zeeb > a').attr('href').replace(KUSONIME_URL, ''),
-                    image: $(el).find('.zeeb > a > img').attr('src'),
-                    url: $(el).find('.zeeb > a').attr('href')
+                    title: $(el).find(".zeeb > a > img").attr("title"),
+                    endpoint: $(el).find(".zeeb > a").attr("href").replace(KUSONIME_URL, ""),
+                    image: $(el).find(".zeeb > a > img").attr("src"),
+                    url: $(el).find(".zeeb > a").attr("href")
                 });
             });
 
@@ -141,16 +156,16 @@ export default class MainController {
 
     static async getGenres(_, res) {
         try {
-            const response = await axiosInstance.get('/genres');
+            const response = await axiosInstance.get("/genres");
             const $ = cheerio.load(response.data);
-            const element = $('.venser > .venutama');
+            const element = $(".venser > .venutama");
 
             const genres = [];
-            $(element).find('ul.genres > li').each((i, el) => {
+            $(element).find("ul.genres > li").each((i, el) => {
                 genres.push({
-                    name: $(el).find('a').text(),
-                    endpoint: $(el).find('a').attr('href')?.replace(KUSONIME_URL, ''),
-                    url: $(el).find('a').attr('href')
+                    name: $(el).find("a").text(),
+                    endpoint: $(el).find("a").attr("href")?.replace(KUSONIME_URL, ""),
+                    url: $(el).find("a").attr("href")
                 });
             });
 
@@ -178,16 +193,16 @@ export default class MainController {
 
     static async getSeasons(_, res) {
         try {
-            const response = await axiosInstance.get('/seasons-list');
+            const response = await axiosInstance.get("/seasons-list");
             const $ = cheerio.load(response.data);
-            const element = $('.venser > .venutama');
+            const element = $(".venser > .venutama");
 
             const seasons = [];
-            $(element).find('ul.genres > li').each((i, el) => {
+            $(element).find("ul.genres > li").each((i, el) => {
                 seasons.push({
-                    name: $(el).find('a').text(),
-                    endpoint: $(el).find('a').attr('href')?.replace(KUSONIME_URL, ''),
-                    url: $(el).find('a').attr('href')
+                    name: $(el).find("a").text(),
+                    endpoint: $(el).find("a").attr("href")?.replace(KUSONIME_URL, ""),
+                    url: $(el).find("a").attr("href")
                 });
             });
 
