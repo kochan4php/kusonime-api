@@ -102,6 +102,7 @@ export default class MainController {
 
                 if (download.length === 0) {
                     download = MainController.getDownloadLinks($, ".smokeddl", ".smokeurl", ".smokettl");
+                    download = download.filter((element) => element.link_download.length > 0);
                 }
             } 
 
