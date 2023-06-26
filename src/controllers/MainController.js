@@ -99,7 +99,11 @@ export default class MainController {
 
             if (download.length === 0) {
                 download = MainController.getDownloadLinks($, ".smokeddlrhrh", ".smokeurlrhrh", ".smokettlrhrh");
-            }
+
+                if (download.length === 0) {
+                    download = MainController.getDownloadLinks($, ".smokeddl", ".smokeurl", ".smokettl");
+                }
+            } 
 
             const season = {
                 name: $(element).find(".lexot .info > p:nth-of-type(3) > a").text(),
