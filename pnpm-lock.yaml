@@ -9,7 +9,7 @@ dependencies:
     specifier: ^1.4.0
     version: 1.4.0
   cheerio:
-    specifier: ^1.0.0-rc.12
+    specifier: 1.0.0-rc.12
     version: 1.0.0-rc.12
   cors:
     specifier: ^2.8.5
