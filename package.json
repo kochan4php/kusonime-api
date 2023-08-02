@@ -9,8 +9,8 @@
         "start": "node ./src/index.js"
     },
     "keywords": [],
-    "author": "",
-    "license": "ISC",
+    "author": "Deo Subarno",
+    "license": "MIT",
     "devDependencies": {
         "nodemon": "^3.0.1"
     },
