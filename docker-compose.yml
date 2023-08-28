@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+    kusonime-api:
+        container_name: kusonime-api
+        restart: always
+        image: kusonime-api
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - 8000:8000
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.50'
+                    memory: 512M
