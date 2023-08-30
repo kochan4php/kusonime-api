@@ -11,4 +11,7 @@ cd kusonime-api
 
 # run docker command in shell file
 sh docker.sh
+
+# after run docker.sh, now open the url in :
+http://localhost:8000
 ```
