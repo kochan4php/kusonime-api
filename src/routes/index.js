@@ -1,15 +1,20 @@
+/**
+ * @description - This file contain all routes for kusonime api endpoints
+ * @author {Deo Sbrn}
+ */
+
 import express from "express";
 import MainController from "../controllers/MainController.js";
 
-const Route = express.Router();
+const router = express.Router();
 
-Route.get("/page/:page", MainController.getAnimePerPage);
-Route.get("/anime/:slug", MainController.getAnimeDetail);
-Route.get("/rekomendasi", MainController.getRekomendasi);
-Route.get("/search/:query", MainController.searchAnime);
-Route.get("/genres", MainController.getGenres);
-Route.get("/genres/:genre/page/:page", MainController.getAnimeByGenres);
-Route.get("/seasons", MainController.getSeasons);
-Route.get("/seasons/:season/page/:page", MainController.getAnimeBySeasons);
+router.get("/page/:page", MainController.getAnimePerPage);
+router.get("/anime/:slug", MainController.getAnimeDetail);
+router.get("/rekomendasi", MainController.getRekomendasi);
+router.get("/search/:query", MainController.searchAnime);
+router.get("/genres", MainController.getGenres);
+router.get("/genres/:genre/page/:page", MainController.getAnimeByGenres);
+router.get("/seasons", MainController.getSeasons);
+router.get("/seasons/:season/page/:page", MainController.getAnimeBySeasons);
 
-export default Route;
+export default router;

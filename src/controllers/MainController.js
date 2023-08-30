@@ -1,3 +1,8 @@
+/**
+ * @description - This file contain a main controller for kusonime api endpoints
+ * @author {Deo Sbrn}
+ */
+
 import cheerio from "cheerio";
 import axiosInstance from "../config/axiosInstance.js";
 import ResponseHelper from "../helpers/ResponseHelper.js";

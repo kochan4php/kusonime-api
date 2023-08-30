@@ -1,3 +1,8 @@
+/**
+ * @description - This file contain axios instance for kusonime api endpoints
+ * @author {Deo Sbrn}
+ */
+
 import axios from "axios";
 import tough from "tough-cookie";
 
