@@ -11,7 +11,7 @@
     "rules": {
         "indent": ["error", 4],
         "semi": ["error", "always"],
-        "space-before-function-paren": ["error", "never"],
+        "space-before-function-paren": ["off", "never"],
         "camelcase": "off",
         "no-trailing-spaces": "off"
     }

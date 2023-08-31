@@ -1,5 +1,7 @@
 /**
  * @description - This file contain axios instance for kusonime api endpoints
+ * @description - This file is used by the scraper to fetch data from kusonime
+ * @description - This file also contain configuration for axios instance
  * @author {Deo Sbrn}
  */
 
