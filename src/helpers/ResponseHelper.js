@@ -12,7 +12,7 @@ export default class ResponseHelper {
      * @returns {Response} - Express response object
      */
     static success(res, status, data) {
-        return res.status(status).type("application/json").json({ success: true, data });
+        return res.status(status).type('application/json').json({ success: true, data });
     }
 
     /**
@@ -23,6 +23,6 @@ export default class ResponseHelper {
      * @returns {Response} - Express response object
      */
     static failed(res, status, err) {
-        return res.status(status).type("application/json").json({ success: false, err });
+        return res.status(status).type('application/json').json({ success: false, err });
     }
 }
