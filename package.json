@@ -8,7 +8,8 @@
         "dev": "nodemon ./src/index.js",
         "start": "node ./src/index.js",
         "lint": "eslint ./src/**/*.js",
-        "lint:fix": "eslint --fix ./src/**/*.js"
+        "lint:fix": "eslint --fix ./src/**/*.js",
+        "prepare": "husky install"
     },
     "keywords": [
         "kusonime",
@@ -26,6 +27,7 @@
         "eslint-plugin-import": "^2.28.1",
         "eslint-plugin-n": "^16.0.2",
         "eslint-plugin-promise": "^6.1.1",
+        "husky": "^8.0.3",
         "nodemon": "^3.0.1"
     },
     "dependencies": {
