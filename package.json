@@ -9,7 +9,14 @@
         "start": "node ./src/index.js",
         "lint": "eslint ./src/**/*.js"
     },
-    "keywords": [],
+    "keywords": [
+        "kusonime",
+        "api",
+        "rest",
+        "unofficial",
+        "anime",
+        "anime downloader"
+    ],
     "author": "Deo Subarno",
     "license": "MIT",
     "devDependencies": {
