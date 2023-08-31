@@ -12,6 +12,7 @@
     "author": "Deo Subarno",
     "license": "MIT",
     "devDependencies": {
+        "eslint": "^8.48.0",
         "nodemon": "^3.0.1"
     },
     "dependencies": {
