@@ -4,7 +4,7 @@
  */
 
 import express from 'express';
-import MainController from '../controllers/MainController.js';
+import MainController from '../app/controllers/main.controller';
 
 const router = express.Router();
 

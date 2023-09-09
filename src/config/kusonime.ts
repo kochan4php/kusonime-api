@@ -5,15 +5,12 @@
  * @author {Deo Sbrn}
  */
 
-import axios from 'axios';
-import tough from 'tough-cookie';
+import axios, { AxiosInstance } from 'axios';
 
-const KUSONIME_URL = 'https://kusonime.com';
-const cookieJar = new tough.CookieJar();
+const KUSONIME_URL: string = 'https://kusonime.com';
 
-const axiosInstance = axios.create({
+const kusonime: AxiosInstance = axios.create({
     baseURL: KUSONIME_URL,
-    jar: cookieJar,
     withCredentials: true,
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -29,8 +26,8 @@ const axiosInstance = axios.create({
         'Sec-Fetch-Dest': 'document',
         'Sec-Fetch-Mode': 'navigate',
         'Sec-Fetch-User': '?1',
-        'Sec-Fetch-Site': 'none'
-    }
+        'Sec-Fetch-Site': 'none',
+    },
 });
 
-export default axiosInstance;
+export default kusonime;

@@ -2,12 +2,12 @@ version: '3.8'
 
 services:
     kusonime-api:
-        container_name: kusonime-api
-        restart: always
-        image: kusonime-api
+        container_name: app
         build:
             context: .
-            dockerfile: Dockerfile
+            dockerfile: ./dockerfiles/Dockerfile.prod
+        image: kusonime-api:latest
+        restart: always
         ports:
             - 8000:8000
         deploy:
