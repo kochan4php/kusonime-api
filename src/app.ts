@@ -9,15 +9,15 @@ import cors from 'cors';
 import express, { Application } from 'express';
 import { rateLimit } from 'express-rate-limit';
 import morgan from 'morgan';
+import ResponseHelper from './app/helpers/response.helper';
 import { corsConfig, limitterConfig } from './config/app';
 import mainRoute from './routes/main.route';
-import ResponseHelper from './app/helpers/response.helper';
 
 /**
  * @description Init express application
  * @returns {Application} - Express application
  */
-const init = function (): Application {
+export default function init(): Application {
     // * Init express app
     const app: Application = express();
 
@@ -31,11 +31,9 @@ const init = function (): Application {
     // * Main Route
     app.use('/api', mainRoute);
 
-    // * 404 Not Found
-    app.use((_, res) => ResponseHelper.failed(res, 404, { message: 'Path Not Found. Please go to /api' }));
+    // * Default Route
+    app.use((_, res) => ResponseHelper.failed(res, 404, { message: 'Welcome to Unofficial Kusonime REST API' }));
 
     // * Return express app
     return app;
-};
-
-export default init;
+}

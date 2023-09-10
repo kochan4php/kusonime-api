@@ -12,7 +12,7 @@ import { logger } from './logger';
 /**
  * Bootstrap the application
  */
-(function () {
+(() => {
     const PORT = 8000;
     const app: Application = init();
     app.listen(PORT, () => logger.info('Server', `started on port ${PORT}`));

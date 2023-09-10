@@ -6,44 +6,35 @@
 import cheerio, { CheerioAPI } from 'cheerio';
 import { Request, Response } from 'express';
 import kusonime from '../../config/kusonime';
+import { logger } from '../../logger';
 import ResponseHelper from '../helpers/response.helper';
 import { AnimeType, DownloadLinkType, DownloadType, GenreType, PlatformType, RekomendasiType, SeasonType } from '../interfaces';
 
 const KUSONIME_URL = 'https://kusonime.com/';
 
 export default class MainController {
-    public static getDownloadLinks($: CheerioAPI, wrapperClass: string, urlClass: string, titleClass: string) {
+    public static getDownloadLinks($: CheerioAPI, wrapperClass: string, urlClass: string, titleClass: string): DownloadType[] {
         const element = $('.venser');
 
         const download: DownloadType[] = [];
-        $(element)
-            .find(wrapperClass)
-            .each((_, element) => {
-                const temp_res: DownloadLinkType[] = [];
-                $(element)
-                    .find(urlClass)
-                    .each((_, el) => {
-                        const temp_dl: PlatformType[] = [];
-                        $(el)
-                            .find('a')
-                            .each((_, elm) => {
-                                temp_dl.push({
-                                    platform: $(elm).text(),
-                                    url: $(elm).attr('href'),
-                                });
-                            });
+        $(element).find(wrapperClass).each((_, element) => {
+            const temp_res: DownloadLinkType[] = [];
 
-                        temp_res.push({
-                            resolusi: $(el).find('strong').text(),
-                            link: temp_dl,
-                        });
-                    });
+            $(element).find(urlClass).each((_, el) => {
+                const temp_dl: PlatformType[] = [];
 
-                download.push({
-                    title: $(element).find(titleClass).text(),
-                    link_download: temp_res,
+                $(el).find('a').each((_, elm) => {
+                    const obj = { platform: $(elm).text(), url: $(elm).attr('href') };
+                    temp_dl.push(obj);
                 });
+
+                const obj = { resolusi: $(el).find('strong').text(), link: temp_dl };
+                temp_res.push(obj);
             });
+
+            const obj = { title: $(element).find(titleClass).text(), link_download: temp_res };
+            download.push(obj);
+        });
 
         return download;
     }
@@ -52,27 +43,25 @@ export default class MainController {
         const anime: AnimeType[] = [];
         const element = $('.venutama');
 
-        $(element)
-            .find('.venz ul .kover')
-            .each((_, el) => {
-                const title = $(el).find('.content > h2 > a').text();
-                const release = $(el).find('.content > p').text().trim().split('Genre')[0].trim().split('Admin')[1].trim();
-                const genres = $(el).find('.content > p').text().trim().split('Genre')[1].trim().split(', ');
-                const link = {
-                    endpoint: $(el).find('.thumb a').attr('href')?.replace(KUSONIME_URL, ''),
-                    url: $(el).find('.thumb a').attr('href'),
-                    image: $(el).find('.thumb a .thumbz img').attr('src'),
-                };
+        $(element).find('.venz ul .kover').each((_, el) => {
+            const title = $(el).find('.content > h2 > a').text();
+            const release = $(el).find('.content > p').text().trim().split('Genre')[0].trim().split('Admin')[1].trim();
+            const genres = $(el).find('.content > p').text().trim().split('Genre')[1].trim().split(', ');
+            const link = {
+                endpoint: $(el).find('.thumb a').attr('href')?.replace(KUSONIME_URL, ''),
+                url: $(el).find('.thumb a').attr('href'),
+                image: $(el).find('.thumb a .thumbz img').attr('src'),
+            };
 
-                anime.push({ title, release, genres, link });
-            });
+            anime.push({ title, release, genres, link });
+        });
 
         return anime;
     }
 
-    public static async getAnimePerPage(req: Request, res: Response) {
+    public static async getAnimePerPage(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
         try {
-            const page = req.params.page;
+            const { page } = req.params;
             const response = await kusonime.get(`/page/${page}`);
             const $ = cheerio.load(response.data);
             const anime = MainController.formatAnimeData($);
@@ -93,28 +82,28 @@ export default class MainController {
 
             return ResponseHelper.success(res, 200, { anime, pagination });
         } catch (err: any) {
-            console.log(err);
+            logger.error('Error', err.message, err.stack);
             return ResponseHelper.failed(res, 500, err);
         }
     }
 
-    public static async getAnimeDetail(req: Request, res: Response) {
+    public static async getAnimeDetail(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
         try {
-            const slug = req.params.slug;
+            const { slug } = req.params;
             const response = await kusonime.get(`/${slug}`);
             const $ = cheerio.load(response.data);
             const element = $('.venser');
 
-            const genre: { name: string; url: string | undefined; endpoint: string | undefined }[] = [];
-            $(element)
-                .find('.info > p:nth-of-type(2) > a')
-                .each((_, el) => {
-                    genre.push({
-                        name: $(el).text(),
-                        url: $(el).attr('href'),
-                        endpoint: $(el)?.attr('href')?.replace(KUSONIME_URL, ''),
-                    });
-                });
+            const genre: GenreType[] = [];
+            $(element).find('.info > p:nth-of-type(2) > a').each((_, el) => {
+                const obj = {
+                    name: $(el).text(),
+                    url: $(el).attr('href'),
+                    endpoint: $(el)?.attr('href')?.replace(KUSONIME_URL, ''),
+                };
+                
+                genre.push(obj);
+            });
 
             let download = [];
             download = MainController.getDownloadLinks($, '.smokeddlrh', '.smokeurlrh', '.smokettlrh');
@@ -154,62 +143,62 @@ export default class MainController {
 
             return ResponseHelper.success(res, 200, animeDetail);
         } catch (err: any) {
-            console.log(err);
+            logger.error('Error', err.message, err.stack);
             return ResponseHelper.failed(res, 500, err);
         }
     }
 
-    public static async getRekomendasi(_: Request, res: Response) {
+    public static async getRekomendasi(_: Request, res: Response): Promise<Response<any, Record<string, any>>> {
         try {
             const response = await kusonime.get('/');
             const $ = cheerio.load(response.data);
             const element = $('.rekomf');
 
             const rekomendAnime: RekomendasiType[] = [];
-            $(element)
-                .find('.recomx > ul > li')
-                .each((i, el) => {
-                    rekomendAnime.push({
-                        title: $(el).find('.zeeb > a > img').attr('title'),
-                        endpoint: $(el).find('.zeeb > a').attr('href')?.replace(KUSONIME_URL, ''),
-                        image: $(el).find('.zeeb > a > img').attr('src'),
-                        url: $(el).find('.zeeb > a').attr('href'),
-                    });
-                });
+            $(element).find('.recomx > ul > li').each((_, el) => {
+                const obj = {
+                    title: $(el).find('.zeeb > a > img').attr('title'),
+                    endpoint: $(el).find('.zeeb > a').attr('href')?.replace(KUSONIME_URL, ''),
+                    image: $(el).find('.zeeb > a > img').attr('src'),
+                    url: $(el).find('.zeeb > a').attr('href'),
+                };
+
+                rekomendAnime.push(obj);
+            });
 
             return ResponseHelper.success(res, 200, rekomendAnime);
         } catch (err: any) {
-            console.log(err);
+            logger.error('Error', err.message, err.stack);
             return ResponseHelper.failed(res, 500, err);
         }
     }
 
-    public static async getGenres(_: Request, res: Response) {
+    public static async getGenres(_: Request, res: Response): Promise<Response<any, Record<string, any>>> {
         try {
             const response = await kusonime.get('/genres');
             const $ = cheerio.load(response.data);
             const element = $('.venser > .venutama');
 
             const genres: GenreType[] = [];
-            $(element)
-                .find('ul.genres > li')
-                .each((i, el) => {
-                    genres.push({
-                        name: $(el).find('a').text(),
-                        endpoint: $(el).find('a').attr('href')?.replace(KUSONIME_URL, ''),
-                        url: $(el).find('a').attr('href'),
-                    });
-                });
+            $(element).find('ul.genres > li').each((_, el) => {
+                const obj = {
+                    name: $(el).find('a').text(),
+                    endpoint: $(el).find('a').attr('href')?.replace(KUSONIME_URL, ''),
+                    url: $(el).find('a').attr('href'),
+                };
+
+                genres.push(obj);
+            });
 
             genres.splice(0, 1);
             return ResponseHelper.success(res, 200, genres);
         } catch (err: any) {
-            console.log(err);
+            logger.error('Error', err.message, err.stack);
             return ResponseHelper.failed(res, 500, err);
         }
     }
 
-    public static async getAnimeByGenres(req: Request, res: Response) {
+    public static async getAnimeByGenres(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
         try {
             const { genre, page } = req.params;
             const response = await kusonime.get(`/genres/${genre}/page/${page}`);
@@ -218,37 +207,37 @@ export default class MainController {
 
             return ResponseHelper.success(res, 200, anime);
         } catch (err: any) {
-            console.log(err);
+            logger.error('Error', err.message, err.stack);
             return ResponseHelper.failed(res, 500, err);
         }
     }
 
-    public static async getSeasons(_: Request, res: Response) {
+    public static async getSeasons(_: Request, res: Response): Promise<Response<any, Record<string, any>>> {
         try {
             const response = await kusonime.get('/seasons-list');
             const $ = cheerio.load(response.data);
             const element = $('.venser > .venutama');
 
             const seasons: SeasonType[] = [];
-            $(element)
-                .find('ul.genres > li')
-                .each((i, el) => {
-                    seasons.push({
-                        name: $(el).find('a').text(),
-                        endpoint: $(el).find('a').attr('href')?.replace(KUSONIME_URL, ''),
-                        url: $(el).find('a').attr('href'),
-                    });
-                });
+            $(element).find('ul.genres > li').each((_, el) => {
+                const obj = {
+                    name: $(el).find('a').text(),
+                    endpoint: $(el).find('a').attr('href')?.replace(KUSONIME_URL, ''),
+                    url: $(el).find('a').attr('href'),
+                };
+                
+                seasons.push(obj);
+            });
 
             seasons.splice(0, 1);
             return ResponseHelper.success(res, 200, seasons);
         } catch (err: any) {
-            console.log(err);
+            logger.error('Error', err.message, err.stack);
             return ResponseHelper.failed(res, 500, err);
         }
     }
 
-    public static async getAnimeBySeasons(req: Request, res: Response) {
+    public static async getAnimeBySeasons(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
         try {
             const { season, page } = req.params;
             const response = await kusonime.get(`/seasons/${season}/page/${page}`);
@@ -257,12 +246,12 @@ export default class MainController {
 
             return ResponseHelper.success(res, 200, anime);
         } catch (err: any) {
-            console.log(err);
+            logger.error('Error', err.message, err.stack);
             return ResponseHelper.failed(res, 500, err);
         }
     }
 
-    public static async searchAnime(req: Request, res: Response) {
+    public static async searchAnime(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
         try {
             const response = await kusonime.get(`/?s=${req.params.query}&post_type=post`);
             const $ = cheerio.load(response.data);
@@ -270,7 +259,7 @@ export default class MainController {
 
             return ResponseHelper.success(res, 200, anime);
         } catch (err: any) {
-            console.log(err);
+            logger.error('Error', err.message, err.stack);
             return ResponseHelper.failed(res, 500, err);
         }
     }

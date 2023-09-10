@@ -7,10 +7,8 @@
 
 import axios, { AxiosInstance } from 'axios';
 
-const KUSONIME_URL: string = 'https://kusonime.com';
-
 const kusonime: AxiosInstance = axios.create({
-    baseURL: KUSONIME_URL,
+    baseURL: 'https://kusonime.com',
     withCredentials: true,
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
