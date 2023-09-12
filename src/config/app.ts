@@ -5,6 +5,7 @@
 
 import { CorsOptions } from 'cors';
 import { Options } from 'express-rate-limit';
+import { HelmetOptions } from 'helmet';
 
 export const corsConfig = (): CorsOptions => ({
     credentials: true,
@@ -18,4 +19,9 @@ export const limitterConfig = (): Partial<Options> => ({
     legacyHeaders: true,
     statusCode: 429,
     message: 'Too many requests, please try again later.',
+});
+
+export const helmetConfig = (): Readonly<HelmetOptions> => ({
+    xssFilter: true,
+    hidePoweredBy: true,
 });

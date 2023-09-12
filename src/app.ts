@@ -10,8 +10,9 @@ import express, { Application } from 'express';
 import { rateLimit } from 'express-rate-limit';
 import morgan from 'morgan';
 import ResponseHelper from './app/helpers/response.helper';
-import { corsConfig, limitterConfig } from './config/app';
+import { corsConfig, helmetConfig, limitterConfig } from './config/app';
 import mainRoute from './routes/main.route';
+import helmet from 'helmet';
 
 /**
  * @description Init express application
@@ -21,9 +22,8 @@ export default function init(): Application {
     // * Init express app
     const app: Application = express();
 
-    // * Connect to database
-
     // * Middlewares
+    app.use(helmet(helmetConfig()));
     app.use(cors(corsConfig()));
     app.use(rateLimit(limitterConfig()));
     app.use(morgan('dev'));
