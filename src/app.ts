@@ -32,7 +32,7 @@ export default function init(): Application {
     app.use('/api', mainRoute);
 
     // * Default Route
-    app.use((_, res) => ResponseHelper.failed(res, 404, { message: 'Welcome to Unofficial Kusonime REST API' }));
+    app.use((_, res) => ResponseHelper.success(res, 200, { message: 'Welcome to Unofficial Kusonime REST API' }));
 
     // * Return express app
     return app;
