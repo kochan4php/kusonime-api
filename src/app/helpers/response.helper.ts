@@ -13,7 +13,7 @@ export default class ResponseHelper {
      * @param {Record<string, any>} data - Data to be sent to the client
      * @returns {Response} - Express response object
      */
-    public static success(res: Response, status: number, data: Record<string, any>): Response {
+    public static success(res: Response, status: number, data?: Record<string, any>): Response {
         return res.status(status).type('application/json').json({ success: true, data });
     }
 
@@ -24,7 +24,7 @@ export default class ResponseHelper {
      * @param {Record<string, any>} err - Error to be sent to the client
      * @returns {Response} - Express response object
      */
-    public static failed(res: Response, status: number, err: Record<string, any>): Response {
+    public static failed(res: Response, status: number, err?: Record<string, any>): Response {
         return res.status(status).type('application/json').json({ success: false, err });
     }
 }
