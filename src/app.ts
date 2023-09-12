@@ -28,6 +28,9 @@ export default function init(): Application {
     app.use(rateLimit(limitterConfig()));
     app.use(morgan('dev'));
 
+    // * Trust proxy
+    app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal']);
+
     // * Main Route
     app.use('/api', mainRoute);
 
