@@ -126,7 +126,7 @@ export default class MainController {
 
             const animeDetail = {
                 title: $(element).find('.post-thumb img').attr('title'),
-                japanase: $(element).find('.lexot .info > p:nth-of-type(1)').text().split(':')[1].trim(),
+                japanese: $(element).find('.lexot .info > p:nth-of-type(1)').text().split(':')[1].trim(),
                 image: $(element).find('.post-thumb img').attr('src'),
                 producer: $(element).find('.lexot .info > p:nth-of-type(4)').text().split(':')[1].trim(),
                 type: $(element).find('.lexot .info > p:nth-of-type(5)').text().split(':')[1].trim(),
