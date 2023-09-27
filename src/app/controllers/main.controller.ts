@@ -14,9 +14,9 @@ const KUSONIME_URL = 'https://kusonime.com/';
 
 export default class MainController {
     public static getDownloadLinks($: CheerioAPI, wrapperClass: string, urlClass: string, titleClass: string): DownloadType[] {
+        const download: DownloadType[] = [];
         const element = $('.venser');
 
-        const download: DownloadType[] = [];
         $(element).find(wrapperClass).each((_, element) => {
             const temp_res: DownloadLinkType[] = [];
 
@@ -152,9 +152,9 @@ export default class MainController {
         try {
             const response = await kusonime.get('/');
             const $ = cheerio.load(response.data);
+            const rekomendAnime: RekomendasiType[] = [];
             const element = $('.rekomf');
 
-            const rekomendAnime: RekomendasiType[] = [];
             $(element).find('.recomx > ul > li').each((_, el) => {
                 const obj = {
                     title: $(el).find('.zeeb > a > img').attr('title'),
@@ -177,9 +177,9 @@ export default class MainController {
         try {
             const response = await kusonime.get('/genres');
             const $ = cheerio.load(response.data);
+            const genres: GenreType[] = [];
             const element = $('.venser > .venutama');
 
-            const genres: GenreType[] = [];
             $(element).find('ul.genres > li').each((_, el) => {
                 const obj = {
                     name: $(el).find('a').text(),
@@ -216,9 +216,9 @@ export default class MainController {
         try {
             const response = await kusonime.get('/seasons-list');
             const $ = cheerio.load(response.data);
+            const seasons: SeasonType[] = [];
             const element = $('.venser > .venutama');
 
-            const seasons: SeasonType[] = [];
             $(element).find('ul.genres > li').each((_, el) => {
                 const obj = {
                     name: $(el).find('a').text(),

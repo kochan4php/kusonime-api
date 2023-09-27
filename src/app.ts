@@ -8,11 +8,11 @@
 import cors from 'cors';
 import express, { Application } from 'express';
 import { rateLimit } from 'express-rate-limit';
+import helmet from 'helmet';
 import morgan from 'morgan';
 import ResponseHelper from './app/helpers/response.helper';
 import { corsConfig, helmetConfig, limitterConfig } from './config/app';
 import mainRoute from './routes/main.route';
-import helmet from 'helmet';
 
 /**
  * @description Init express application

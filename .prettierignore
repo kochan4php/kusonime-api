@@ -1,1 +1,8 @@
 /src/app/controllers/main.controller.ts
+.husky
+dockerfiles
+node_modules
+.*ignore
+*.md
+*.yml
+*.yaml
