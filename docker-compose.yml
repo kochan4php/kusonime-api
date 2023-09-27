@@ -5,7 +5,7 @@ services:
         container_name: app
         build:
             context: .
-            dockerfile: ./dockerfiles/Dockerfile.prod
+            dockerfile: ./dockerfiles/production/Dockerfile
         image: kusonime-api:latest
         restart: always
         ports:
