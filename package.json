@@ -9,6 +9,8 @@
         "build": "tsc -p .",
         "lint": "eslint src/**/*.ts",
         "lint:fix": "eslint src/**/*.ts --fix",
+        "docker:up": "pnpm docker:down && docker compose up -d",
+        "docker:down": "docker compose down",
         "prepare": "husky install"
     },
     "keywords": [
