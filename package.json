@@ -7,8 +7,10 @@
         "dev": "nodemon src/index.ts",
         "start": "node dist/index.js",
         "build": "tsc -p .",
-        "lint": "eslint src/**/*.ts",
+        "lint:check": "eslint src/**/*.ts",
         "lint:fix": "eslint src/**/*.ts --fix",
+        "prettier:check": "prettier --check src/**/*.ts",
+        "prettier:write": "prettier --write src/**/*.ts",
         "docker:up": "pnpm docker:down && docker compose up -d",
         "docker:down": "docker compose down",
         "prepare": "husky install"
@@ -47,5 +49,16 @@
         "husky": "^8.0.3",
         "morgan": "^1.10.0",
         "npmlog": "^7.0.1"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "src/**/*.ts": [
+            "pnpm lint:fix",
+            "pnpm prettier:write"
+        ]
     }
 }
