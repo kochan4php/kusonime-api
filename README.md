@@ -12,7 +12,7 @@ npm i -g pnpm
 # go to the project folder
 cd kusonime-api
 
-# run docker command in shell file
+# run docker compose using pnpm
 pnpm docker:up
 
 # after run docker:up command, now open the url in :
