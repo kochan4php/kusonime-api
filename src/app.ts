@@ -13,6 +13,9 @@ import morgan from 'morgan';
 import ResponseHelper from './app/helpers/response.helper';
 import { corsConfig, helmetConfig, limitterConfig } from './config/app';
 import mainRoute from './routes/main.route';
+import swaggerUI from 'swagger-ui-express';
+import swaggerJsDoc from 'swagger-jsdoc';
+import swaggerOption from './config/swagger';
 
 /**
  * @description Init express application
@@ -30,6 +33,10 @@ export default function init(): Application {
 
     // * Trust proxy
     app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal']);
+
+    // * Swagger
+    const swaggerSpec = swaggerJsDoc(swaggerOption);
+    app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
     // * Main Route
     app.use('/api', mainRoute);

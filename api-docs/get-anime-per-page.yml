@@ -1,0 +1,35 @@
+paths:
+    /api/page/{page}:
+        get:
+            parameters:
+                - name: page
+                  in: path
+                  schema:
+                      type: integer
+                  required: true
+            responses:
+                200:
+                    description: success get anime with pagination
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        default: true
+                                    data:
+                                        type: object
+                                        properties:
+                                            anime:
+                                                type: array
+                500:
+                    description: failed get anime with pagination
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        default: false

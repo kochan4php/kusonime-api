@@ -1,6 +1,6 @@
 {
     "name": "express-ts-starter",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "description": "Unofficial Kusonime REST API",
     "main": "index.js",
     "scripts": {
@@ -30,6 +30,8 @@
         "@types/morgan": "^1.9.7",
         "@types/node": "^20.8.7",
         "@types/npmlog": "^4.1.5",
+        "@types/swagger-jsdoc": "^6.0.2",
+        "@types/swagger-ui-express": "^4.1.5",
         "@typescript-eslint/eslint-plugin": "^6.8.0",
         "@typescript-eslint/parser": "^6.8.0",
         "eslint": "^8.51.0",
@@ -48,7 +50,9 @@
         "helmet": "^7.0.0",
         "husky": "^8.0.3",
         "morgan": "^1.10.0",
-        "npmlog": "^7.0.1"
+        "npmlog": "^7.0.1",
+        "swagger-jsdoc": "^6.2.8",
+        "swagger-ui-express": "^5.0.0"
     },
     "husky": {
         "hooks": {

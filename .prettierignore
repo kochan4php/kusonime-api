@@ -4,5 +4,4 @@ dockerfiles
 node_modules
 .*ignore
 *.md
-*.yml
-*.yaml
+pnpm-lock.yaml
