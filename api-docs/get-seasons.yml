@@ -1,0 +1,31 @@
+paths:
+    /api/seasons:
+        get:
+            tags:
+                - API
+            responses:
+                200:
+                    description: success get season anime
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        default: true
+                                    data:
+                                        type: object
+                                        properties:
+                                            anime:
+                                                type: array
+                500:
+                    description: failed get season anime
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        default: false
