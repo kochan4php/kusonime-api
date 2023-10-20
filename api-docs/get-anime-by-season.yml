@@ -1,0 +1,44 @@
+paths:
+    /api/seasons/{season}/page/{page}:
+        get:
+            tags:
+                - API
+            parameters:
+                - name: season
+                  in: path
+                  schema:
+                      type: string
+                  required: true
+                  example: fall-2022
+                - name: page
+                  in: path
+                  schema:
+                      type: integer
+                  required: true
+                  example: 1
+            responses:
+                200:
+                    description: success get anime by season
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        default: true
+                                    data:
+                                        type: object
+                                        properties:
+                                            anime:
+                                                type: array
+                500:
+                    description: failed get anime by season
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        default: false
