@@ -1,12 +1,11 @@
 import swaggerJSDoc from 'swagger-jsdoc';
-import pjson from '../../package.json';
 
 const swaggerOption: swaggerJSDoc.Options = {
     swaggerDefinition: {
         openapi: '3.0.0',
         info: {
             title: 'Unofficial Kusonime REST API',
-            version: pjson.version,
+            version: '1.0.0',
             description: 'Unofficial Kusonime REST API',
             contact: {
                 name: 'Deo Sbrn',
