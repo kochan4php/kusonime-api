@@ -1,18 +1,11 @@
 paths:
-    /api/search/{query}:
+    /api/genres:
         get:
             tags:
                 - API
-            parameters:
-                - name: query
-                  in: path
-                  schema:
-                      type: string
-                  required: true
-                  example: highschool dxd
             responses:
                 200:
-                    description: success get mencari anime
+                    description: success get genre anime
                     content:
                         application/json:
                             schema:
@@ -27,7 +20,7 @@ paths:
                                             anime:
                                                 type: array
                 500:
-                    description: failed get mencari anime
+                    description: failed get genre anime
                     content:
                         application/json:
                             schema:
