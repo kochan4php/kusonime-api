@@ -1,18 +1,18 @@
 paths:
-    /api/page/{page}:
+    /api/anime/{slug}:
         get:
             tags:
                 - API
             parameters:
-                - name: page
+                - name: slug
                   in: path
                   schema:
-                      type: integer
+                      type: string
                   required: true
-                  example: 1
+                  example: jjk-s2-subtitle-indonesia
             responses:
                 200:
-                    description: success get anime with pagination
+                    description: success get detail anime
                     content:
                         application/json:
                             schema:
@@ -27,7 +27,7 @@ paths:
                                             anime:
                                                 type: array
                 500:
-                    description: failed get anime with pagination
+                    description: failed get detail anime
                     content:
                         application/json:
                             schema:
