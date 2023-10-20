@@ -1,0 +1,38 @@
+paths:
+    /api/search/{query}:
+        get:
+            tags:
+                - API
+            parameters:
+                - name: query
+                  in: path
+                  schema:
+                      type: string
+                  required: true
+                  example: highschool dxd
+            responses:
+                200:
+                    description: success get rekomendasi anime
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        default: true
+                                    data:
+                                        type: object
+                                        properties:
+                                            anime:
+                                                type: array
+                500:
+                    description: failed get rekomendasi anime
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        default: false
