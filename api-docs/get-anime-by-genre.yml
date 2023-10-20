@@ -1,0 +1,44 @@
+paths:
+    /api/genres/{genre}/page/{page}:
+        get:
+            tags:
+                - API
+            parameters:
+                - name: genre
+                  in: path
+                  schema:
+                      type: string
+                  required: true
+                  example: action
+                - name: page
+                  in: path
+                  schema:
+                      type: integer
+                  required: true
+                  example: 1
+            responses:
+                200:
+                    description: success get anime by genre
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        default: true
+                                    data:
+                                        type: object
+                                        properties:
+                                            anime:
+                                                type: array
+                500:
+                    description: failed get anime by genre
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        default: false
