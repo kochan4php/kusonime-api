@@ -1,22 +1,24 @@
 import swaggerJSDoc from 'swagger-jsdoc';
 
+const localUrl: string = 'http://localhost:8000';
+const prodUrl: string = 'https://brick-red-cricket-gown.cyclic.app';
+const url: string = process.env.NODE_ENV === 'development' ? localUrl : prodUrl;
+
+const localDescription: string = 'Local server';
+const prodDescription: string = 'Production server';
+const description: string = process.env.NODE_ENV === 'development' ? localDescription : prodDescription;
+
 const swaggerOption: swaggerJSDoc.Options = {
     swaggerDefinition: {
         openapi: '3.0.0',
         info: {
             title: 'Unofficial Kusonime REST API',
             version: '1.0.0',
-            description: 'Unofficial Kusonime REST API',
-            contact: {
-                name: 'Deo Sbrn',
-                url: 'https://github.com/kochan4php',
-            },
+            description: 'This is an API documentation for Unofficial Kusonime REST API',
+            contact: { name: 'kochan4php', url: 'https://github.com/kochan4php' },
         },
 
-        servers: [
-            { url: 'https://brick-red-cricket-gown.cyclic.app', description: 'Production server' },
-            { url: 'http://localhost:8000', description: 'Development server' },
-        ],
+        servers: [{ url, description }],
     },
     apis: ['./api-docs/*.yml', './api-docs/*/*.yml'],
 };

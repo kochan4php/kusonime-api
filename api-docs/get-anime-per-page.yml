@@ -1,6 +1,8 @@
 paths:
     /api/page/{page}:
         get:
+            tags:
+                - API
             parameters:
                 - name: page
                   in: path
