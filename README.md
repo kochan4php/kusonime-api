@@ -18,3 +18,6 @@ pnpm docker:up
 # after run docker:up command, now open the url in :
 http://localhost:8000
 ```
+
+### See the documentation below ⬇️
+- [Unofficial Kusonime REST API Documentation](https://brick-red-cricket-gown.cyclic.app/api-docs)
