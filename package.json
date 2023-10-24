@@ -68,6 +68,7 @@
     },
     "lint-staged": {
         "src/**/*.ts": [
+            "pnpm test",
             "pnpm lint:fix",
             "pnpm prettier:write"
         ]
