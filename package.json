@@ -1,5 +1,5 @@
 {
-    "name": "express-ts-starter",
+    "name": "kusonime-api",
     "version": "1.0.0",
     "description": "Unofficial Kusonime REST API",
     "main": "index.js",
