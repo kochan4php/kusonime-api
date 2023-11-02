@@ -8,6 +8,7 @@
         "start": "cross-env NODE_ENV=production node dist/index.js",
         "build": "tsc -p .",
         "test": "jest --silent --detectOpenHandles --forceExit --runInBand",
+        "test:pass": "jest --silent --detectOpenHandles --forceExit --runInBand --passWithNoTests",
         "lint:check": "eslint src/**/*.ts",
         "lint:fix": "eslint src/**/*.ts --fix",
         "prettier:check": "prettier --check src/**/*.ts",
@@ -68,7 +69,7 @@
     },
     "lint-staged": {
         "src/**/*.ts": [
-            "pnpm test",
+            "pnpm test:pass",
             "pnpm lint:fix",
             "pnpm prettier:write"
         ]

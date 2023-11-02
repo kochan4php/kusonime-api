@@ -10,12 +10,12 @@ import express, { Application } from 'express';
 import { rateLimit } from 'express-rate-limit';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import ResponseHelper from './app/helpers/response.helper';
-import { corsConfig, helmetConfig, limitterConfig } from './config/app';
-import mainRoute from './routes/main.route';
-import swaggerUI from 'swagger-ui-express';
 import swaggerJsDoc from 'swagger-jsdoc';
+import swaggerUI from 'swagger-ui-express';
+import { corsConfig, helmetConfig, limitterConfig } from './config/app';
 import swaggerOption from './config/swagger';
+import mainRoute from './routes/main.route';
+import defaultRoute from './routes/default.route';
 
 /**
  * @description Init express application
@@ -42,7 +42,7 @@ export default function init(): Application {
     app.use('/api', mainRoute);
 
     // * Default Route
-    app.use((_, res) => ResponseHelper.success(res, 200, { message: 'Welcome to Unofficial Kusonime REST API' }));
+    app.use(defaultRoute);
 
     // * Return express app
     return app;
