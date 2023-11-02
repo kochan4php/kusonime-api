@@ -1,6 +1,6 @@
 {
     "name": "kusonime-api",
-    "version": "1.0.0",
+    "version": "1.0.0-lts",
     "description": "Unofficial Kusonime REST API",
     "main": "index.js",
     "scripts": {
