@@ -3,6 +3,7 @@ paths:
         get:
             tags:
                 - API
+            summary: Get the anime you are looking for
             parameters:
                 - name: query
                   in: path

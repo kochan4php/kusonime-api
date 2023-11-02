@@ -3,6 +3,7 @@ paths:
         get:
             tags:
                 - API
+            summary: Get detail anime
             parameters:
                 - name: slug
                   in: path

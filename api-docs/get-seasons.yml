@@ -3,6 +3,7 @@ paths:
         get:
             tags:
                 - API
+            summary: Get all anime season data
             responses:
                 200:
                     description: success get season anime

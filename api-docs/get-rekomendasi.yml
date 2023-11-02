@@ -3,6 +3,7 @@ paths:
         get:
             tags:
                 - API
+            summary: Get anime recommendation
             responses:
                 200:
                     description: success get rekomendasi anime
