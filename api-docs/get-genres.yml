@@ -3,6 +3,7 @@ paths:
         get:
             tags:
                 - API
+            summary: Get all anime genre data
             responses:
                 200:
                     description: success get genre anime

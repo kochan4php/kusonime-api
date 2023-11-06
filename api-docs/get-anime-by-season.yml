@@ -3,6 +3,7 @@ paths:
         get:
             tags:
                 - API
+            summary: Get anime by season
             parameters:
                 - name: season
                   in: path

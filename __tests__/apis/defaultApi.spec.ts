@@ -1,5 +1,5 @@
-import supertest from "supertest"
-import app from "../../__mocks__/app"
+import supertest from 'supertest';
+import app from '../../__mocks__/app';
 
 describe('Test default api', () => {
     it('should return 200 OK', async () => {
@@ -11,11 +11,13 @@ describe('Test default api', () => {
         expect(resultMain.body).toHaveProperty('data');
         expect(resultMain.body.data).toHaveProperty('message');
         expect(resultMain.body.data.message).toBe('Welcome to Unofficial Kusonime REST API');
-        
+        expect(resultMain.body.data['api-docs']).toBe('https://brick-red-cricket-gown.cyclic.app/api-docs/');
+
         expect(resultNotFound.status).toBe(200);
         expect(resultNotFound.body).toHaveProperty('success', true);
         expect(resultNotFound.body).toHaveProperty('data');
         expect(resultNotFound.body.data).toHaveProperty('message');
         expect(resultNotFound.body.data.message).toBe('Welcome to Unofficial Kusonime REST API');
-    })
-})
+        expect(resultNotFound.body.data['api-docs']).toBe('https://brick-red-cricket-gown.cyclic.app/api-docs/');
+    });
+});
