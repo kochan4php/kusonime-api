@@ -6,6 +6,7 @@
  */
 
 import { Application } from 'express';
+import serverless from 'serverless-http';
 import init from './app';
 import { logger } from './logger';
 
@@ -17,3 +18,5 @@ import { logger } from './logger';
     const app: Application = init();
     app.listen(PORT, () => logger.info('Server', `started on port ${PORT}`));
 })();
+
+module.exports.handler = serverless(init());
