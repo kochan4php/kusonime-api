@@ -1,3 +1,7 @@
-import log from 'npmlog';
+import pino from 'pino';
 
-export const logger = log;
+export const logger = pino({
+    transport: {
+        target: 'pino-pretty',
+    },
+});

@@ -82,7 +82,7 @@ export default class MainController {
 
             return ResponseHelper.success(res, 200, { anime, pagination });
         } catch (err: any) {
-            logger.error('Error', err.message, err.stack);
+            logger.error(`Error ${err.message}`, err.stack);
             return ResponseHelper.failed(res, 500);
         }
     }
@@ -143,7 +143,7 @@ export default class MainController {
 
             return ResponseHelper.success(res, 200, animeDetail);
         } catch (err: any) {
-            logger.error('Error', err.message, err.stack);
+            logger.error(`Error ${err.message}`, err.stack);
             return ResponseHelper.failed(res, 500);
         }
     }
@@ -168,7 +168,7 @@ export default class MainController {
 
             return ResponseHelper.success(res, 200, rekomendAnime);
         } catch (err: any) {
-            logger.error('Error', err.message, err.stack);
+            logger.error(`Error ${err.message}`, err.stack);
             return ResponseHelper.failed(res, 500);
         }
     }
@@ -193,7 +193,7 @@ export default class MainController {
             genres.splice(0, 1);
             return ResponseHelper.success(res, 200, genres);
         } catch (err: any) {
-            logger.error('Error', err.message, err.stack);
+            logger.error(`Error ${err.message}`, err.stack);
             return ResponseHelper.failed(res, 500);
         }
     }
@@ -207,7 +207,7 @@ export default class MainController {
 
             return ResponseHelper.success(res, 200, anime);
         } catch (err: any) {
-            logger.error('Error', err.message, err.stack);
+            logger.error(`Error ${err.message}`, err.stack);
             return ResponseHelper.failed(res, 500);
         } 
     }
@@ -232,7 +232,7 @@ export default class MainController {
             seasons.splice(0, 1);
             return ResponseHelper.success(res, 200, seasons);
         } catch (err: any) {
-            logger.error('Error', err.message, err.stack);
+            logger.error(`Error ${err.message}`, err.stack);
             return ResponseHelper.failed(res, 500);
         }
     }
@@ -246,7 +246,7 @@ export default class MainController {
 
             return ResponseHelper.success(res, 200, anime);
         } catch (err: any) {
-            logger.error('Error', err.message, err.stack);
+            logger.error(`Error ${err.message}`, err.stack);
             return ResponseHelper.failed(res, 500);
         }
     }
@@ -259,7 +259,7 @@ export default class MainController {
 
             return ResponseHelper.success(res, 200, anime);
         } catch (err: any) {
-            logger.error('Error', err.message, err.stack);
+            logger.error(`Error ${err.message}`, err.stack);
             return ResponseHelper.failed(res, 500);
         }
     }

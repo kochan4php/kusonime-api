@@ -16,7 +16,7 @@ import { logger } from './logger';
 (() => {
     const PORT = 8000;
     const app: Application = init();
-    app.listen(PORT, () => logger.info('Server', `started on port ${PORT}`));
+    app.listen(PORT, () => logger.info(`Server started on port ${PORT}`));
 })();
 
 module.exports.handler = serverless(init());
